@@ -1,17 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export default class FavoriteMoviesInput {
+export default class UsersInput {
   @ApiProperty()
   id?: number;
 
   @ApiProperty()
-  name: string;
+  title: string;
 
   @ApiProperty()
-  password: string;
+  user_id?: number;
 
   @ApiProperty()
   active: boolean;
-  title: string;
-  user_id: number;
 }
+
