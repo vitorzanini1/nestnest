@@ -13,46 +13,49 @@ import {
   import { ApiTags, ApiCreatedResponse } from '@nestjs/swagger';
   import UsersOutput from '../models/dto/output/users.output';
   import UsersInput from '../models/dto/input/users.input';
+  import { FavoriteMoviesService } from 'src/services/FavoriteMovies.service';
+  import FavoriteMoviesOutput from 'src/models/dto/output/favoriteMovies.output';
+  import FavoriteMoviesInput from '../models/dto/input/users.input';
   
   @ApiTags('FavoriteMovies')
   @Controller('FavoriteMovies')
-  export class UsersController {
-    constructor(private readonly usersService: UsersService) {}
+  export class FavoriteMoviesController {
+    constructor(private readonly favoriteMoviesService: FavoriteMoviesService) {}
   
     @Get()
-    @ApiCreatedResponse({ type: UsersOutput, isArray: true })
-    findAll(): Promise<UsersOutput[]> {
-      return this.usersService.findAll();
+    @ApiCreatedResponse({ type: FavoriteMoviesOutput, isArray: true })
+    findAll(): Promise<FavoriteMoviesOutput[]> {
+      return this.favoriteMoviesService.findAll();
     }
   
     @Post()
-    save(@Body() input: UsersInput) {
-      return this.usersService.save(input);
+    save(@Body() input: FavoriteMoviesInput) {
+      return this.favoriteMoviesService.save(input);
     }
   
     @Put(':id')
-    @ApiCreatedResponse({ type: UsersOutput })
+    @ApiCreatedResponse({ type: FavoriteMoviesOutput })
     update(
       @Param('id') id: string,
-      @Body() input: UsersInput,
-    ): Promise<UsersOutput> {
-      return this.usersService.update(+id, input);
+      @Body() input: FavoriteMoviesInput,
+    ): Promise<FavoriteMoviesOutput> {
+      return this.favoriteMoviesService.update(+id, input);
     }
   
     @Get(':id')
-    @ApiCreatedResponse({ type: UsersOutput })
+    @ApiCreatedResponse({ type: FavoriteMoviesOutput })
     findOne(@Param('id') id: string) {
-      return this.usersService.findOne(+id);
+      return this.favoriteMoviesService.findOne(+id);
     }
   
     @Patch(':id')
-    @ApiCreatedResponse({ type: UsersOutput })
+    @ApiCreatedResponse({ type: FavoriteMoviesOutput })
     updateName(@Param('id') id: string, @Query('titlle') name: string) {
-      return this.usersService.updateName(+id, name);
+      return this.favoriteMoviesService.updateName(+id, name);
     }
   
     @Delete(':id')
     remove(@Param('id') id: string) {
-      return this.usersService.remove(+id);
+      return this.favoriteMoviesService.remove(+id);
     }
   }

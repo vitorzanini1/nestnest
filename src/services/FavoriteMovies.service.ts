@@ -1,11 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import UserEntity from '../models/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import UsersOutput from '../models/dto/output/users.output';
-import UsersConverter from '../models/converters/users.converter';
-import UsersInput from '../models/dto/input/users.input';
+
 import FavoriteMoviesEntity from 'src/models/entities/favoriteMovies.entity';
 import FavoriteMoviesConverter from 'src/models/converters/favoriteMovies.converter';
 import FavoriteMoviesInput from '../models/dto/input/users.input';
@@ -16,14 +13,14 @@ import { title } from 'process';
 export class FavoriteMoviesService {
   constructor(
     @InjectRepository(FavoriteMoviesEntity)
-    private readonly userRepo: Repository<FavoriteMoviesEntity>,
+    private readonly favoriteMoviesRepo: Repository<FavoriteMoviesEntity>,
     private readonly favoriteMoviesConverter: FavoriteMoviesConverter,
   ) {}
 
   async findAll(): Promise<FavoriteMoviesOutput[]> {
-    const userEntities = await this.userRepo.find();
+    const favoriteMoviesEntities = await this.favoriteMoviesRepo.find();
 
-    const outputList = userEntities.map((entity) => {
+    const outputList = favoriteMoviesEntities.map((entity) => {
       return this.favoriteMoviesConverter.entityToOutput(entity);
     });
 
@@ -35,7 +32,7 @@ export class FavoriteMoviesService {
 
     const convertedEntity = this.favoriteMoviesConverter.inputToEntity(input, entity);
 
-    const savedEntity = await this.userRepo.save(convertedEntity);
+    const savedEntity = await this.favoriteMoviesRepo.save(convertedEntity);
 
     const output = this.favoriteMoviesConverter.entityToOutput(savedEntity);
 
@@ -43,14 +40,14 @@ export class FavoriteMoviesService {
   }
 
   async update(id: number, input: FavoriteMoviesInput): Promise<FavoriteMoviesOutput> {
-    const favoriteMoviesEntity = await this.userRepo.findOne({ where: { id: id } });
+    const favoriteMoviesEntity = await this.favoriteMoviesRepo.findOne({ where: { id: id } });
 
     const convertedEntity = this.favoriteMoviesConverter.inputToEntity(
       input,
       favoriteMoviesEntity,
     );
 
-    const savedEntity = await this.userRepo.save(convertedEntity);
+    const savedEntity = await this.favoriteMoviesRepo.save(convertedEntity);
 
     const output = this.favoriteMoviesConverter.entityToOutput(savedEntity);
 
@@ -58,7 +55,7 @@ export class FavoriteMoviesService {
   }
 
   async findOne(id: number) {
-    const favoriteMoviesEntity = await this.userRepo.findOne({ where: { id: id } });
+    const favoriteMoviesEntity = await this.favoriteMoviesRepo.findOne({ where: { id: id } });
 
     const output = this.favoriteMoviesConverter.entityToOutput(favoriteMoviesEntity);
 
@@ -66,11 +63,11 @@ export class FavoriteMoviesService {
   }
 
   async updateName(id: number, name: string) {
-    const favoriteMoviesEntity = await this.userRepo.findOne({ where: { id } });
+    const favoriteMoviesEntity = await this.favoriteMoviesRepo.findOne({ where: { id } });
 
     favoriteMoviesEntity.title = title;
 
-    const userSaved = await this.userRepo.save(favoriteMoviesEntity);
+    const userSaved = await this.favoriteMoviesRepo.save(favoriteMoviesEntity);
 
     const output = this.favoriteMoviesConverter.entityToOutput(userSaved);
 
