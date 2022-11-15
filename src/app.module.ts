@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './modules/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppConfigModule } from './appconfig.module';
+import { FavoriteMoviesModule } from './modules/favoriteMovies.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { AppConfigModule } from './appconfig.module';
     }),
     AppConfigModule,
     UsersModule,
+    FavoriteMoviesModule
   ],
   controllers: [AppController],
   providers: [AppService],
