@@ -3,10 +3,10 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 
-import FavoriteMoviesEntity from 'src/models/entities/favoriteMovies.entity';
-import FavoriteMoviesConverter from 'src/models/converters/favoriteMovies.converter';
+import FavoriteMoviesEntity from '../models/entities/favoriteMovies.entity';
+import FavoriteMoviesConverter from '../models/converters/favoriteMovies.converter';
 import FavoriteMoviesInput from '../models/dto/input/users.input';
-import FavoriteMoviesOutput from 'src/models/dto/output/favoriteMovies.output';
+import FavoriteMoviesOutput from '../models/dto/output/favoriteMovies.output';
 import { title } from 'process';
 
 @Injectable()
@@ -67,14 +67,14 @@ export class FavoriteMoviesService {
 
     favoriteMoviesEntity.title = title;
 
-    const userSaved = await this.favoriteMoviesRepo.save(favoriteMoviesEntity);
+    const favoriteMoviesSaved = await this.favoriteMoviesRepo.save(favoriteMoviesEntity);
 
-    const output = this.favoriteMoviesConverter.entityToOutput(userSaved);
+    const output = this.favoriteMoviesConverter.entityToOutput(favoriteMoviesSaved);
 
     return output;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number) {
+    return await this.favoriteMoviesRepo.delete(id);
   }
 }

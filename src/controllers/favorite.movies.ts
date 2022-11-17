@@ -9,12 +9,9 @@ import {
     Body,
     Put,
   } from '@nestjs/common';
-  import { UsersService } from '../services/users.service';
   import { ApiTags, ApiCreatedResponse } from '@nestjs/swagger';
-  import UsersOutput from '../models/dto/output/users.output';
-  import UsersInput from '../models/dto/input/users.input';
-  import { FavoriteMoviesService } from 'src/services/FavoriteMovies.service';
-  import FavoriteMoviesOutput from 'src/models/dto/output/favoriteMovies.output';
+  import { FavoriteMoviesService } from '../services/FavoriteMovies.service';
+  import FavoriteMoviesOutput from '../models/dto/output/favoriteMovies.output';
   import FavoriteMoviesInput from '../models/dto/input/users.input';
   
   @ApiTags('FavoriteMovies')
